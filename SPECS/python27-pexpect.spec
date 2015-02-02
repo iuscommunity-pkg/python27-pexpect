@@ -7,7 +7,7 @@ License: MIT
 Group: Development/Languages
 URL: https://github.com/pexpect/pexpect
 Source0: https://pypi.python.org/packages/source/p/pexpect/pexpect-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+%{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 
 BuildArch: noarch
 BuildRequires: python2-devel python-nose ed
@@ -44,7 +44,7 @@ pty module.
 
 
 %install
-rm -rf %{buildroot}
+%{?el5:%{__rm} -rf %{buildroot}}
 
 %{__python} setup.py install --skip-build \
     --root %{buildroot} --install-lib %{python_sitelib}
@@ -54,8 +54,10 @@ rm -rf ${buildroot}%{python_sitelib}/setuptools/tests
 # Correct some permissions
 find examples -type f -exec chmod a-x \{\} \;
 
-%clean
-rm -rf %{buildroot}
+
+%{?el5:%clean}
+%{?el5:%{__rm} -rf %{buildroot}}
+
 
 %files
 %defattr(-,root,root)
