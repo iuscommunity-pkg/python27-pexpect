@@ -1,4 +1,3 @@
-#global relcand rc3
 
 Summary: Unicode-aware Pure Python Expect-like module
 Name: python-pexpect
@@ -30,7 +29,7 @@ pty module.
 
 
 %prep
-%setup -q -n pexpect-%{version}%{?relcand}
+%setup -q -n pexpect-%{version}
 
 #sed -i "s/0.1/10.0/g" tests/test_misc.py
 
@@ -63,7 +62,7 @@ rm -rf %{buildroot}
 %doc doc examples LICENSE
 %{python_sitelib}/*.py*
 %{python_sitelib}/pexpect/
-%{python_sitelib}/pexpect-%{version}%{?relcand}-py?.?.egg-info
+%{python_sitelib}/pexpect-%{version}-py?.?.egg-info
 %exclude %{python_sitelib}/pexpect/tests/
 
 
