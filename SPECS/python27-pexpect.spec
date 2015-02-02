@@ -1,3 +1,4 @@
+%global with_check 0
 
 Summary: Unicode-aware Pure Python Expect-like module
 Name: python-pexpect
@@ -10,7 +11,11 @@ Source0: https://pypi.python.org/packages/source/p/pexpect/pexpect-%{version}.ta
 %{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 
 BuildArch: noarch
-BuildRequires: python2-devel python-nose ed
+%if 0%{?with_tests}
+BuildRequires: python-nose
+%endif
+BuildRequires: python2-devel ed
+
 
 %description
 Pexpect is a pure Python module for spawning child applications; controlling
@@ -39,12 +44,15 @@ pty module.
 
 
 %check
+%if 0%{?with_tests}
 . ./test.env
 ./tools/testall.py
+%endif
 
 
 %install
 %{?el5:%{__rm} -rf %{buildroot}}
+
 
 %{__python} setup.py install --skip-build \
     --root %{buildroot} --install-lib %{python_sitelib}
