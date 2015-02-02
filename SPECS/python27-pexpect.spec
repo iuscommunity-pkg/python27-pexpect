@@ -1,17 +1,17 @@
 #global relcand rc3
 
-Summary:	Unicode-aware Pure Python Expect-like module
-Name:		python-pexpect
-Version:	3.1
-Release:	3%{?dist}
-License:	MIT
-Group:		Development/Languages
-URL:		https://github.com/pexpect/pexpect
-Source0:	https://github.com/pexpect/pexpect/releases/download/%{version}%{?relcand}/pexpect-%{version}%{?relcand}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Summary: Unicode-aware Pure Python Expect-like module
+Name: python-pexpect
+Version: 3.1
+Release: 3%{?dist}
+License: MIT
+Group: Development/Languages
+URL: https://github.com/pexpect/pexpect
+Source0: https://github.com/pexpect/pexpect/releases/download/%{version}%{?relcand}/pexpect-%{version}%{?relcand}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildArch:	noarch
-BuildRequires:	python2-devel python-nose ed
+BuildArch: noarch
+BuildRequires: python2-devel python-nose ed
 
 %description
 Pexpect is a pure Python module for spawning child applications; controlling
