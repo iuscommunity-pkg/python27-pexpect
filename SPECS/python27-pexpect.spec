@@ -7,7 +7,7 @@ Release: 3%{?dist}
 License: MIT
 Group: Development/Languages
 URL: https://github.com/pexpect/pexpect
-Source0: https://github.com/pexpect/pexpect/releases/download/%{version}%{?relcand}/pexpect-%{version}%{?relcand}.tar.gz
+Source0: https://pypi.python.org/packages/source/p/pexpect/pexpect-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch: noarch
