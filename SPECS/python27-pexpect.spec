@@ -1,9 +1,17 @@
+%global pymajor 2
+%global pyminor 7
+%global pyver %{pymajor}.%{pyminor}
+%global iusver %{pymajor}%{pyminor}
+%global __python27 %{_bindir}/python%{pyver}
+%global python27_sitelib  %(%{__python27} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+%global python27_sitearch %(%{__python27} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
+%global __os_install_post %{__python27_os_install_post}
 %global with_check 0
 
 Summary: Unicode-aware Pure Python Expect-like module
-Name: python-pexpect
-Version: 3.1
-Release: 3%{?dist}
+Name: python%{iusver}-pexpect
+Version: 3.3
+Release: 1.ius%{?dist}
 License: MIT
 Group: Development/Languages
 URL: https://github.com/pexpect/pexpect
@@ -14,7 +22,7 @@ BuildArch: noarch
 %if 0%{?with_tests}
 BuildRequires: python-nose
 %endif
-BuildRequires: python2-devel ed
+BuildRequires: python%{iusver}-devel ed
 
 
 %description
@@ -35,12 +43,12 @@ pty module.
 
 %prep
 %setup -q -n pexpect-%{version}
-
+find -name '*.py' -type f -print0 | xargs -0 sed -i '1s|^#!/usr/bin/env .*|#!/usr/bin/env python%{pyver}|'
 #sed -i "s/0.1/10.0/g" tests/test_misc.py
 
 
 %build
-%{__python} setup.py build
+%{__python27} setup.py build
 
 
 %check
@@ -53,11 +61,13 @@ pty module.
 %install
 %{?el5:%{__rm} -rf %{buildroot}}
 
+%{__python27} setup.py install \
+    --root %{buildroot} \
+    --install-lib %{python27_sitelib} \
+    --optimize 1 \
+    --skip-build
 
-%{__python} setup.py install --skip-build \
-    --root %{buildroot} --install-lib %{python_sitelib}
-
-rm -rf ${buildroot}%{python_sitelib}/setuptools/tests
+rm -rf ${buildroot}%{python27_sitelib}/setuptools/tests
 
 # Correct some permissions
 find examples -type f -exec chmod a-x \{\} \;
@@ -68,15 +78,18 @@ find examples -type f -exec chmod a-x \{\} \;
 
 
 %files
-%defattr(-,root,root)
 %doc doc examples LICENSE
-%{python_sitelib}/*.py*
-%{python_sitelib}/pexpect/
-%{python_sitelib}/pexpect-%{version}-py?.?.egg-info
-%exclude %{python_sitelib}/pexpect/tests/
+%{python27_sitelib}/*.py*
+%{python27_sitelib}/pexpect/
+%{python27_sitelib}/pexpect-%{version}-py?.?.egg-info
+%exclude %{python27_sitelib}/pexpect/tests/
 
 
 %changelog
+* Fri Feb 06 2015 Carl George <carl.george@rackspace.com> - 3.3
+- Port from Fedora to IUS
+- Latest upstream
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
