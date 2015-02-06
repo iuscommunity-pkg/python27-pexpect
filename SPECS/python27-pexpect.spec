@@ -44,7 +44,6 @@ pty module.
 %prep
 %setup -q -n pexpect-%{version}
 find -name '*.py' -type f -print0 | xargs -0 sed -i '1s|^#!/usr/bin/env .*|#!/usr/bin/env python%{pyver}|'
-#sed -i "s/0.1/10.0/g" tests/test_misc.py
 
 
 %build
@@ -67,8 +66,6 @@ find -name '*.py' -type f -print0 | xargs -0 sed -i '1s|^#!/usr/bin/env .*|#!/us
     --optimize 1 \
     --skip-build
 
-rm -rf ${buildroot}%{python27_sitelib}/setuptools/tests
-
 # Correct some permissions
 find examples -type f -exec chmod a-x \{\} \;
 
@@ -82,7 +79,6 @@ find examples -type f -exec chmod a-x \{\} \;
 %{python27_sitelib}/*.py*
 %{python27_sitelib}/pexpect/
 %{python27_sitelib}/pexpect-%{version}-py?.?.egg-info
-%exclude %{python27_sitelib}/pexpect/tests/
 
 
 %changelog
